@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { customMedia } from '../styles/GlobalStyle';
 
 export interface IProps {
-  productData: { id: number; imageUrl: string; productList: IProductList[] };
+  productData: { id: number; imageUrl: string; productList: IProduct[] };
 }
 
-export interface IProductList {
+export interface IProduct {
   idx: number;
   productId: number;
   productName: string;
@@ -18,6 +18,8 @@ export interface IProductList {
   priceDiscount: number;
   discountRate: number;
   imageUrl: string;
+  showToolTip: any;
+  handleToolTip: any;
 }
 
 function Main() {

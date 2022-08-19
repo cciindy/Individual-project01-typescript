@@ -2,9 +2,9 @@ import { useState } from 'react';
 import ProductSwiper from './ProductSwiper';
 import styled from 'styled-components';
 import { customMedia } from '../styles/GlobalStyle';
-import { IProps, IProductList } from '../pages/Main';
+import { IProps, IProduct } from '../pages/Main';
 
-function ImageMap({ ...productData }: IProps['productData']) {
+function ImageMap(productData: IProps['productData']) {
   const products = productData?.productList;
   console.log('product', products);
 
@@ -21,16 +21,16 @@ function ImageMap({ ...productData }: IProps['productData']) {
   return (
     <Container>
       <Image src={productData.imageUrl} />
-      {products?.map((products: IProductList) => {
+      {products?.map((product) => {
         return (
           <>
             <Tag
-              onClick={() => handleToolTip(products.idx)}
-              key={products.idx}
-              pointX={products.pointX}
-              pointY={products.pointY}
+              onClick={() => handleToolTip(product.idx)}
+              key={product.idx}
+              pointX={product.pointX}
+              pointY={product.pointY}
             >
-              {!showToolTip[products.idx] ? (
+              {!showToolTip[product.idx] ? (
                 <TagIcon type="button">
                   <img
                     src="https://cdn.ggumim.co.kr/storage/20211029145238AlZrQ41xtg.png"
@@ -43,17 +43,15 @@ function ImageMap({ ...productData }: IProps['productData']) {
                     src="https://cdn.ggumim.co.kr/storage/20211029145330GwwumnWNSs.png"
                     alt="closeIcon"
                   />
-                  <ToolTipBox pointY={products.pointY}>
-                    <img src={products.imageUrl} alt="productImg" />
+                  <ToolTipBox pointY={product.pointY}>
+                    <img src={product.imageUrl} alt="productImg" />
                     <Desc>
-                      <ProductName>{products.productName}</ProductName>
-                      {products.discountRate > 0 ? (
+                      <ProductName>{product.productName}</ProductName>
+                      {product.discountRate > 0 ? (
                         <>
                           <ProductPrice>
-                            <DiscountRate>
-                              {products.discountRate}%
-                            </DiscountRate>
-                            {products.priceDiscount
+                            <DiscountRate>{product.discountRate}%</DiscountRate>
+                            {product.priceDiscount
                               .toString()
                               .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </ProductPrice>
@@ -61,8 +59,8 @@ function ImageMap({ ...productData }: IProps['productData']) {
                       ) : (
                         <>
                           <ProductPrice>
-                            {products.outside && <Outside>예상가</Outside>}
-                            {products.priceOriginal
+                            {product.outside && <Outside>예상가</Outside>}
+                            {product.priceOriginal
                               .toString()
                               .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </ProductPrice>
@@ -82,11 +80,7 @@ function ImageMap({ ...productData }: IProps['productData']) {
           </>
         );
       })}
-      {/* <ProductSwiper
-        {...products}
-        handleToolTip={handleToolTip}
-        showToolTip={showToolTip}
-      /> */}
+      <ProductSwiper {...productData} />
     </Container>
   );
 }
@@ -104,7 +98,7 @@ const Image = styled.img`
   position: relative;
   width: 800px;
 `;
-const Tag = styled.div<IProductList>`
+const Tag = styled.div<IProduct>`
   position: absolute;
   left: -20px;
   width: 40px;
