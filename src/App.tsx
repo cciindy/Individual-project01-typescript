@@ -1,10 +1,10 @@
 import React from 'react';
-import ImageMap from './components/ImageMap';
+import Main from './pages/Main';
 
 function App() {
   return (
     <div className="App">
-      <ImageMap />
+      <Main />
     </div>
   );
 }

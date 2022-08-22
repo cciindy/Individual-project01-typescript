@@ -1,23 +1,16 @@
-import styled, { css } from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ProductSwiper from './ProductSwiper';
+import styled from 'styled-components';
 import { customMedia } from '../styles/GlobalStyle';
+import { IProps, IProduct } from '../pages/Main';
 
-function ImageMap() {
-  const [data, setData] = useState([]);
-  const products = data?.productList;
-
-  useEffect(() => {
-    const getData = async () => {
-      const res = await fetch('https://cdn.ggumim.co.kr/test/image_product_link.json').then((res) => res.json());
-      setData(res);
-    };
-    getData();
-  }, []);
+function ImageMap(productData: IProps['productData']) {
+  const products = productData?.productList;
+  console.log('product', products);
 
   const [showToolTip, setShowToolTip] = useState([false]);
 
-  const handleToolTip = (idx) => {
+  const handleToolTip = (idx: number) => {
     const newArr = Array(products.length).fill(false);
     if (!showToolTip[idx]) {
       newArr[idx] = true;
@@ -27,40 +20,58 @@ function ImageMap() {
 
   return (
     <Container>
-      <Image src={data.imageUrl} />
-      {products?.map((el, idx) => {
+      <Image src={productData.imageUrl} />
+      {products?.map((product) => {
         return (
           <>
-            <Tag onClick={() => handleToolTip(idx)} key={idx} pointX={el.pointX} pointY={el.pointY}>
-              {!showToolTip[idx] ? (
+            <Tag
+              onClick={() => handleToolTip(product.idx)}
+              key={product.idx}
+              pointX={product.pointX}
+              pointY={product.pointY}
+            >
+              {!showToolTip[product.idx] ? (
                 <TagIcon type="button">
-                  <img src="https://cdn.ggumim.co.kr/storage/20211029145238AlZrQ41xtg.png" alt="tagIcon" />
+                  <img
+                    src="https://cdn.ggumim.co.kr/storage/20211029145238AlZrQ41xtg.png"
+                    alt="tagIcon"
+                  />
                 </TagIcon>
               ) : (
                 <CloseIcon type="button">
-                  <img src="https://cdn.ggumim.co.kr/storage/20211029145330GwwumnWNSs.png" alt="closeIcon" />
-                  <ToolTipBox pointX={el.pointY}>
-                    <img src={el.imageUrl} alt="productImg" />
+                  <img
+                    src="https://cdn.ggumim.co.kr/storage/20211029145330GwwumnWNSs.png"
+                    alt="closeIcon"
+                  />
+                  <ToolTipBox pointY={product.pointY}>
+                    <img src={product.imageUrl} alt="productImg" />
                     <Desc>
-                      <ProductName>{el.productName}</ProductName>
-                      {el.discountRate > 0 ? (
+                      <ProductName>{product.productName}</ProductName>
+                      {product.discountRate > 0 ? (
                         <>
                           <ProductPrice>
-                            <DiscountRate>{el.discountRate}%</DiscountRate>
-                            {el.priceDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            <DiscountRate>{product.discountRate}%</DiscountRate>
+                            {product.priceDiscount
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </ProductPrice>
                         </>
                       ) : (
                         <>
                           <ProductPrice>
-                            {el.outside && <Outside>예상가</Outside>}
-                            {el.priceOriginal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            {product.outside && <Outside>예상가</Outside>}
+                            {product.priceOriginal
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                           </ProductPrice>
                         </>
                       )}
                     </Desc>
                     <MoveIconWrapper>
-                      <img src="https://cdn.ggumim.co.kr/storage/20211102181936xqHzyWAmb8.png" alt="상품보기" />
+                      <img
+                        src="https://cdn.ggumim.co.kr/storage/20211102181936xqHzyWAmb8.png"
+                        alt="상품보기"
+                      />
                     </MoveIconWrapper>
                   </ToolTipBox>
                 </CloseIcon>
@@ -69,7 +80,7 @@ function ImageMap() {
           </>
         );
       })}
-      <ProductSwiper products={products} handleToolTip={handleToolTip} showToolTip={showToolTip} />
+      <ProductSwiper {...productData} />
     </Container>
   );
 }
@@ -87,7 +98,7 @@ const Image = styled.img`
   position: relative;
   width: 800px;
 `;
-const Tag = styled.div`
+const Tag = styled.div<IProduct>`
   position: absolute;
   left: -20px;
   width: 40px;
@@ -95,8 +106,8 @@ const Tag = styled.div`
   top: ${(props) => props.pointX * 1.6}px;
   left: ${(props) => props.pointY * 1.6}px;
   ${customMedia.lessThan('mobile')`
-    top: ${(props) => props.pointX * 1.2}px;
-    left: ${(props) => props.pointY * 1.2}px;
+    top: ${(props: any) => props.pointX * 1.2}px;
+    left: ${(props: any) => props.pointY * 1.2}px;
 	`}
 `;
 const TagIcon = styled.button``;
