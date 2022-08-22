@@ -4,11 +4,16 @@ import styled from 'styled-components';
 import { customMedia } from '../styles/GlobalStyle';
 
 export interface IProps {
-  productData: { id: number; imageUrl: string; productList: IProduct[] };
+  productData: {
+    id: number;
+    imageUrl: string;
+    productList: IProduct[];
+    handleToolTip?: any;
+    showToolTip?: any;
+  };
 }
 
 export interface IProduct {
-  idx: number;
   productId: number;
   productName: string;
   outside: boolean;
@@ -18,8 +23,6 @@ export interface IProduct {
   priceDiscount: number;
   discountRate: number;
   imageUrl: string;
-  showToolTip: any;
-  handleToolTip: any;
 }
 
 function Main() {
@@ -28,8 +31,6 @@ function Main() {
     imageUrl: '',
     productList: [],
   });
-
-  console.log('data: ', productData);
 
   useEffect(() => {
     const getData = async () => {
