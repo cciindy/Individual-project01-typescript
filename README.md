@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# [TypeScript] 사진과 가구 조합 컴포넌트 구현
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
+### <img width="50" src="https://user-images.githubusercontent.com/104499132/185838178-be2d91e9-1f31-4844-898b-0600660b8ff9.png"> 집꾸미기 집소개 기능에 포함되어 있는 사진과 가구 정보를 조합하는 컴포넌트 구현하기
+> 개발 기간 2022-08-01 ~ 2022-08-04
+>> 참고: https://www.ggumim.co.kr/star/view/4582
 
-In the project directory, you can run:
+<br>
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 💡 구현 기능
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<img width="463" alt="스크린샷 2022-08-05 오후 5 37 23" src="https://user-images.githubusercontent.com/104499132/183037953-0087b515-a56d-4f14-b380-275302452533.png">
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 사진과 가구에 대한 정보를 API 통해서 호출
+- 가구 정보가 있는 곳에 돋보기 모양의 버튼을 표시
+- 돋보기를 클릭하면 상품정보 tool tip 출력되면서 돋보기모양이 닫기 버튼으로 변경
+- 닫기 버튼을 클릭하면 tool tip을 없애고 돋보기 버튼으로 변경
+- tool tip은 하나만 노출. tool tip이 노출되고 있는 상태에서 다른 가구를 선택하면 노출되고 있 던 tool tip은 닫히고 새로 클릭한 가구 tool tip만 노출
+- 하단에 있는 상품목록에서 해당 가구가 선택되었으면 tool tip 출력
+- 선택된 가구는 선택되었으면 표시
+- 할인율이 존재하는 경우에는 상단에 할인율(discountRate) 표시
+ <img width="663" alt="스크린샷 2022-08-05 오후 5 22 08" src="https://user-images.githubusercontent.com/104499132/183035039-199070f9-5130-4aeb-b6de-e5844a8d8f16.png">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 가구 정보는 2가지 형식이 존재
+    - 입점되어 있는 가구 (product 정보에 outside가 false 이 가구)
+     <img width="213" alt="스크린샷 2022-08-05 오후 5 18 32" src="https://user-images.githubusercontent.com/104499132/183034359-2d422bd1-795c-4e96-bf57-05815c2d91fa.png">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+        - 상품 이미지 (product 정보 imageUrl)
+        - 상품명 (product 정보 name)
+        - 할인율 (product 정보 discount)
+        - 가격 (product 정보 priceDiscount)
+        
+    - 입점되지 않는 가구
+    <img width="219" alt="스크린샷 2022-08-05 오후 5 20 08" src="https://user-images.githubusercontent.com/104499132/183034635-764dbbe3-2596-4fbe-93c1-4d17cb637fad.png">
+        
+        - 상품이미지 (product 정보 imageUrl)
+        - 상품명 (product 정보 name)
+        - 예상 가격 (product 정보 priceDiscount)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<br>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 개발 기능 시연
+![Aug-09-2022 20-42-49](https://user-images.githubusercontent.com/104499132/183640009-c5f1f0af-ff30-47af-8ebb-508902ff160f.gif)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 💻 Technlogies
 
-## Learn More
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"> <img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"> <img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">  <img src="https://img.shields.io/badge/Styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"> 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br>
