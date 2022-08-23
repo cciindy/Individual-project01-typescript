@@ -2,11 +2,15 @@ import { useState } from 'react';
 import ProductSwiper from './ProductSwiper';
 import styled from 'styled-components';
 import { customMedia } from '../styles/GlobalStyle';
-import { IProps, IProduct } from '../pages/Main';
+import { IProps } from '../pages/Main';
+
+interface ICoordinate {
+  pointX: number;
+  pointY: number;
+}
 
 function ImageMap(productData: IProps['productData']) {
   const products = productData?.productList;
-  console.log('product', products);
 
   const [showToolTip, setShowToolTip] = useState([false]);
 
@@ -21,16 +25,16 @@ function ImageMap(productData: IProps['productData']) {
   return (
     <Container>
       <Image src={productData.imageUrl} />
-      {products?.map((product) => {
+      {products?.map((product, idx: number) => {
         return (
           <>
             <Tag
-              onClick={() => handleToolTip(product.idx)}
-              key={product.idx}
+              onClick={() => handleToolTip(idx)}
+              key={product.productId}
               pointX={product.pointX}
               pointY={product.pointY}
             >
-              {!showToolTip[product.idx] ? (
+              {!showToolTip[idx] ? (
                 <TagIcon type="button">
                   <img
                     src="https://cdn.ggumim.co.kr/storage/20211029145238AlZrQ41xtg.png"
@@ -43,7 +47,7 @@ function ImageMap(productData: IProps['productData']) {
                     src="https://cdn.ggumim.co.kr/storage/20211029145330GwwumnWNSs.png"
                     alt="closeIcon"
                   />
-                  <ToolTipBox pointY={product.pointY}>
+                  <ToolTipBox>
                     <img src={product.imageUrl} alt="productImg" />
                     <Desc>
                       <ProductName>{product.productName}</ProductName>
@@ -80,7 +84,11 @@ function ImageMap(productData: IProps['productData']) {
           </>
         );
       })}
-      <ProductSwiper {...productData} />
+      <ProductSwiper
+        {...productData}
+        handleToolTip={handleToolTip}
+        showToolTip={showToolTip}
+      />
     </Container>
   );
 }
@@ -98,7 +106,7 @@ const Image = styled.img`
   position: relative;
   width: 800px;
 `;
-const Tag = styled.div<IProduct>`
+const Tag = styled.div<ICoordinate>`
   position: absolute;
   left: -20px;
   width: 40px;

@@ -3,8 +3,11 @@ import { Scrollbar } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
+import { IProps } from '../pages/Main';
 
-function ProductSwiper({ products, handleToolTip, showToolTip }) {
+function ProductSwiper(productData: IProps['productData']) {
+  const products = productData?.productList;
+
   return (
     <StyleSwiper
       spaceBetween={0}
@@ -18,12 +21,16 @@ function ProductSwiper({ products, handleToolTip, showToolTip }) {
       modules={[Scrollbar]}
       className="mySwiper"
     >
-      {products?.map((el, idx) => (
-        <SwiperSlide key={idx}>
+      {products?.map((product, idx: number) => (
+        <SwiperSlide key={product.productId}>
           <ProductList>
-            <div value={idx} onClick={() => handleToolTip(idx)} className={showToolTip[idx] ? 'active' : ''}>
-              <img src={el.imageUrl} alt="productSwiperImg" />
-              {el.discountRate > 0 && <span>{el.discountRate}%</span>}
+            <div
+              key={product.productId}
+              onClick={() => productData.handleToolTip(idx)}
+              className={productData.showToolTip[idx] ? 'active' : ''}
+            >
+              <img src={product.imageUrl} alt="productSwiperImg" />
+              {product.discountRate > 0 && <span>{product.discountRate}%</span>}
             </div>
           </ProductList>
         </SwiperSlide>
