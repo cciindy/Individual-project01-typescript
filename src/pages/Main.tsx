@@ -8,8 +8,8 @@ export interface IProps {
     id: number;
     imageUrl: string;
     productList: IProduct[];
-    handleToolTip?: any;
-    showToolTip?: any;
+    handleToolTip?: (idx: number) => void;
+    showToolTip?: boolean[];
   };
 }
 

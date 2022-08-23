@@ -25,7 +25,7 @@ function ImageMap(productData: IProps['productData']) {
   return (
     <Container>
       <Image src={productData.imageUrl} />
-      {products?.map((product, idx: number) => {
+      {products?.map((product, idx) => {
         return (
           <>
             <Tag
