@@ -21,13 +21,19 @@ function ProductSwiper(productData: IProps['productData']) {
       modules={[Scrollbar]}
       className="mySwiper"
     >
-      {products?.map((product, idx: number) => (
+      {products?.map((product, idx) => (
         <SwiperSlide key={product.productId}>
           <ProductList>
             <div
               key={product.productId}
-              onClick={() => productData.handleToolTip(idx)}
-              className={productData.showToolTip[idx] ? 'active' : ''}
+              onClick={() =>
+                productData.handleToolTip && productData.handleToolTip(idx)
+              }
+              className={
+                productData.showToolTip && productData.showToolTip[idx]
+                  ? 'active'
+                  : ''
+              }
             >
               <img src={product.imageUrl} alt="productSwiperImg" />
               {product.discountRate > 0 && <span>{product.discountRate}%</span>}
